@@ -1,0 +1,25 @@
+package tool;
+
+import java.awt.Shape;
+
+public class PencilTool extends AbstractTool {
+
+    @Override
+    public Shape startingPoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Shape movePoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Shape endingPoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+}

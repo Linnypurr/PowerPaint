@@ -1,0 +1,48 @@
+package view;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+
+public class DrawingOptions {
+    
+    /** */
+    private final static JToolBar myToolBar = new JToolBar(); 
+    
+    /** */
+    private final static List<String> myToolNames = new ArrayList<>(); 
+    
+    /** */
+    private final static List<JToggleButton> myToolButtons = new ArrayList<>(); 
+    
+    
+    private DrawingOptions() {
+        myToolNames.add("Line");
+        myToolNames.add("Pencil");
+        myToolNames.add("Rectangle");
+        myToolNames.add("RoundedRectangle");
+        myToolNames.add("Ellipse");
+        
+    }
+    
+    private static void createToggleButton() {
+        JToggleButton currentButton; 
+        for (String s : myToolNames) {
+            currentButton = new JToggleButton(s);
+            myToolButtons.add(currentButton); 
+        }
+    }
+    
+    public static JToolBar createToolBar() {
+        for (JToggleButton tog : myToolButtons) {
+            myToolBar.add(tog); 
+        }
+        
+        return myToolBar; 
+    }
+    
+    
+    
+}

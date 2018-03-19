@@ -1,0 +1,123 @@
+package view;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+
+import tool.ToolInterface;
+import tool.EllipseTool;
+import tool.LineTool;
+import tool.RectangleTool;
+import tool.RoundRectangleTool;
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 7, 2017
+ */
+public class DrawingPanel extends JPanel {
+    
+    
+    /** Number to set the preferred size, to avoid magic number. */
+    public static final int PREFERRED_PIXEL = 200; 
+
+    public static final Color LINE_COLOR = Color.BLACK;
+    
+    /** The line width. */
+    public static final int LINE_WIDTH = 5;
+
+    private ArrayList<Shape> myShapesDrawn = new ArrayList<Shape>();
+    private ToolInterface myTool;
+    private Shape myCurrentShape;
+    private boolean hasShape = false;
+    
+    /** */
+    public DrawingPanel() {
+        setBackground(Color.WHITE); 
+        setPreferredSize(new Dimension(PREFERRED_PIXEL, PREFERRED_PIXEL)); 
+        final MyMouseListener mouseListener = new MyMouseListener();
+        addMouseListener(mouseListener); 
+        addMouseMotionListener(mouseListener);
+    }
+    
+    /**
+     * Paints the current path.
+     * 
+     * @param theGraphics The graphics context to use for painting.
+     */
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        // make class to hold the color stroke and stuff
+        g2d.setPaint(LINE_COLOR);
+        g2d.setStroke(new BasicStroke(LINE_WIDTH));
+        if (hasShape) {
+            g2d.draw(myCurrentShape);            
+        }
+        for (Shape shape : myShapesDrawn) {
+            g2d.draw(shape);   
+        }
+    }
+    
+    /**
+     * Listens for mouse clicks, to draw on our panel.
+     */
+    private class MyMouseListener extends MouseAdapter {
+        
+        /**
+         * 
+         */
+        @Override
+        public void mouseEntered(final MouseEvent theEvent) {
+            setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR)); 
+        }
+        
+        @Override
+        public void mousePressed(final MouseEvent theEvent) {
+            // Get from whatever is selected from powerpaint menus
+            if (!hasShape) {
+                hasShape = true;
+                myTool = new RoundRectangleTool();
+                myCurrentShape = myTool.startingPoint(theEvent.getX(), theEvent.getY());
+                // startPoint                
+            }
+        }
+        
+        @Override
+        public void mouseDragged(final MouseEvent theEvent) {
+            if (hasShape) {
+                myCurrentShape = myTool.movePoint(theEvent.getX(), theEvent.getY());
+                repaint();                
+            }
+            // movePoint
+        }
+        
+        @Override
+        public void mouseReleased(final MouseEvent theEvent) {
+            if (hasShape) {
+                myCurrentShape = myTool.movePoint(theEvent.getX(), theEvent.getY());
+                myShapesDrawn.add(myCurrentShape);
+                repaint();                
+            }
+            hasShape = false;
+            // endPoint
+            // add myshape to collection 
+        }
+    }
+}

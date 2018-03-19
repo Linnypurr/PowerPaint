@@ -1,0 +1,38 @@
+package tool;
+
+import java.awt.Shape;
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 15, 2017
+ */
+public class Line implements ToolInterface {
+
+    @Override
+    public String getToolName() {
+        return getClass().getSimpleName().toLowerCase();
+    }
+
+    @Override
+    public String getToolImage() {
+        final StringBuilder imageName = new StringBuilder(25); 
+        final String toolName = getClass().getSimpleName().toLowerCase(); 
+        imageName.append(toolName); 
+        imageName.append(".gif"); 
+        return imageName.toString();
+    }
+
+    @Override
+    public Shape startingPoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Shape endingPoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+}

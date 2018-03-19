@@ -1,0 +1,33 @@
+package tool;
+
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+
+public class EllipseTool extends AbstractTool {
+    
+    private Ellipse2D myEllipse; 
+    
+    private double myX; 
+    private double myY; 
+
+    @Override
+    public Shape startingPoint(final double theX, final double theY) {
+        myX = theX; 
+        myY = theY; 
+        myEllipse = new Ellipse2D.Double(myX, myY, myX, myY);
+        return (Shape) myEllipse.clone(); 
+    }
+
+    @Override
+    public Shape movePoint(final double theX, final double theY) {
+        myEllipse.setFrame(myX, myY, theX, theY);
+        return (Shape) myEllipse.clone(); 
+    }
+
+    @Override
+    public Shape endingPoint(final double theX, final double theY) {
+        myEllipse.setFrame(myX, myY, theX, theY);
+        return (Shape) myEllipse.clone(); 
+    }
+
+}

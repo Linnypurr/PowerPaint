@@ -1,0 +1,47 @@
+package tool;
+
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.Stroke;
+
+public class ShapeTool {
+    
+    private Shape myShape; 
+    
+    private Color mySelectedColor; 
+    
+    private Stroke myStroke;
+    
+    private boolean myFill; 
+    
+    private Color myFillColor; 
+    
+    /**
+     * 
+     * @param theShape
+     * @param theColor
+     * @param theStroke
+     * @param theFill
+     */
+    public ShapeTool(final Shape theShape,final Color theColor, 
+                     final Stroke theStroke, final boolean theFill) {
+        myShape = theShape; 
+        mySelectedColor = theColor; 
+        myStroke = theStroke; 
+        myFill = theFill; 
+    }
+    
+    /**
+     * 
+     * @param theFillColor
+     */
+    public void setFillColor(final Color theFillColor) {
+        if (myFill) {
+            myFillColor = theFillColor; 
+        }
+    }
+
+    
+}
+
+

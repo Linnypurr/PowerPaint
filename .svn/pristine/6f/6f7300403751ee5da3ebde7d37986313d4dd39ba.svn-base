@@ -1,0 +1,139 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 7, 2017
+ */
+public class PowerPaintGUI {
+    
+    /** */
+    private static final Dimension SIZE = new Dimension(600, 600);  
+    
+    /** */
+    private final JFrame myMainFrame = new JFrame("PowerPaint"); 
+    
+    /** */
+    private final JSlider mySlider = new JSlider(SwingConstants.HORIZONTAL,
+                                                 0, 25, 1); 
+    
+
+    
+    /**
+     * 
+     */
+    public void start() {
+        myMainFrame.setVisible(true); 
+        myMainFrame.setLocationRelativeTo(null);
+        myMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myMainFrame.setLayout(new BorderLayout());
+        myMainFrame.setSize(SIZE);
+        myMainFrame.setResizable(true);
+        myMainFrame.setIconImage(null); //replace with W
+        myMainFrame.add(new DrawingPanel(), BorderLayout.CENTER); 
+        
+        final JMenuBar menuBar = new JMenuBar(); 
+        menuBar.add(optionsMenu()); 
+        menuBar.add(toolsMenu()); 
+        menuBar.add(helpMenu()); 
+        myMainFrame.add(menuBar, BorderLayout.NORTH);
+        myMainFrame.add(createToolBar(), BorderLayout.SOUTH); 
+    }
+    
+    /** */ 
+    private JMenu optionsMenu() {
+        final JMenu optionsMenu = new JMenu("Options"); 
+        final JMenu thickness = new JMenu("Thickness");
+        mySlider.setMajorTickSpacing(5);
+        mySlider.setMinorTickSpacing(1);
+        mySlider.setPaintTicks(true);
+        thickness.add(mySlider); 
+        optionsMenu.add(thickness); 
+        optionsMenu.addSeparator();
+        //Color
+        final JColorChooser pickColor = new JColorChooser(); 
+        final JMenu drawColor = new JMenu("Draw Color..."); 
+        optionsMenu.add(drawColor); 
+        final JMenu fillColor = new JMenu ("Fill Color...");
+        optionsMenu.addSeparator();
+        optionsMenu.add(fillColor);
+        optionsMenu.addSeparator();
+        final JCheckBoxMenuItem fillCheckBox = new JCheckBoxMenuItem("Fill"); 
+        optionsMenu.add(fillCheckBox); 
+        final JMenu clear = new JMenu("Clear");
+        optionsMenu.addSeparator();
+        clear.setEnabled(false);
+        optionsMenu.add(clear); 
+        return optionsMenu; 
+        
+    }
+    /** */
+    private JMenu toolsMenu() {
+        final JMenu toolMenu = new JMenu("Tools"); 
+        final List<String> toolNames = new ArrayList<>(); 
+        toolNames.add("Line");
+        toolNames.add("Pencil");
+        toolNames.add("Rectangle");
+        toolNames.add("RoundedRectangle");
+        toolNames.add("Ellipse");
+        
+        JRadioButtonMenuItem radioButton; 
+        for (String s : toolNames) {
+            radioButton = new JRadioButtonMenuItem(s); 
+            toolMenu.add(radioButton); 
+        }
+        return toolMenu;
+    }
+    
+    /** */ 
+    private JMenu helpMenu() {
+        final JMenu help = new JMenu("Help");
+        final JMenu about = new JMenu("About...");
+        help.add(about); 
+        return help; 
+    }
+    
+    /** */
+    public static JToolBar createToolBar() {
+        
+        final JToolBar toolBar = new JToolBar(); 
+        
+        final List<String> toolNames = new ArrayList<>(); 
+        toolNames.add("Line");
+        toolNames.add("Pencil");
+        toolNames.add("Rectangle");
+        toolNames.add("RoundedRectangle");
+        toolNames.add("Ellipse");
+        
+        final List<JToggleButton> toolButtons = new ArrayList<>(); 
+        JToggleButton currentButton; 
+        for (String s : toolNames) {
+            currentButton = new JToggleButton(s);
+            toolButtons.add(currentButton); 
+        }
+        
+        for (JToggleButton tog : toolButtons) {
+            toolBar.add(tog); 
+        }
+        
+        return toolBar; 
+    }
+    
+}

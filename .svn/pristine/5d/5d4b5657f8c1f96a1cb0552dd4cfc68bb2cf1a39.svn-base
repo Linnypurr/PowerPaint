@@ -1,0 +1,85 @@
+package view;
+
+import java.awt.Color;
+import java.awt.MenuBar;
+
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+
+/**
+ * Class that is a MenuBar will be created and 
+ * used in the PowerPaintGUI class. 
+ * 
+ * @author Lindsee Purnell
+ * @version November 11, 2017
+ */
+public class DrawingMenuBar extends MenuBar {
+    
+    /**Constant of the UW purple color. */ 
+    private static final Color UW_PURPLE = new Color(51, 0, 111); 
+    
+    /**Constant of the UW gold color. */
+    private static final Color UW_GOLD = new Color(232, 211, 162); 
+    //(145, 123, 76) metallic gold (much prettier!)
+    
+    /**Constant to avoid magic number. */
+    private static final int SPACING_FIVE = 5; 
+    
+    /**Slider to adjust the thickness of the lines you draw with.  */
+    private final JSlider mySlider = new JSlider(SwingConstants.HORIZONTAL,
+                                                 0, 25, 1); 
+    
+    /** */
+    public DrawingMenuBar() {
+        super(); 
+    }
+    
+    /** 
+     * 
+     * @return optionsMenu JMenu with different items. 
+     */
+    private JMenu createOptionsMenu() {
+        final JMenu optionsMenu = new JMenu("Options");
+        //Thickness
+        final JMenuItem thicknessItem = new JMenuItem("Thickness"); 
+        mySlider.setMajorTickSpacing(SPACING_FIVE);
+        mySlider.setMinorTickSpacing(1);
+        mySlider.setPaintTicks(true);
+        thicknessItem.add(mySlider); 
+        optionsMenu.add(thicknessItem); 
+        optionsMenu.addSeparator();
+        //Draw Color..
+        final JMenuItem colorItem = new JMenuItem("Draw Color..."); 
+        final JColorChooser chooseColor = new JColorChooser(UW_PURPLE);
+        optionsMenu.add(colorItem);
+        optionsMenu.addSeparator();
+        //Fill Color...
+        final JMenuItem fillItem = new JMenuItem("Fill Color..."); 
+        optionsMenu.add(fillItem); 
+        optionsMenu.addSeparator();
+        //Fill check box
+        final JCheckBoxMenuItem fillCheckItem = new JCheckBoxMenuItem("Fill"); 
+        optionsMenu.add(fillCheckItem); 
+        optionsMenu.addSeparator();
+        //Clear
+        
+        return optionsMenu; 
+        
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    private JMenu createHelpMenu() {
+        final JMenu helpMenu = new JMenu("Help");
+        final JMenuItem aboutItem = new JMenuItem("About..."); 
+        
+        
+        return helpMenu; 
+    }
+}

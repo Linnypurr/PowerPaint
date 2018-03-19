@@ -1,0 +1,37 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 7, 2017
+ */
+public class PowerPaintGUI {
+    
+    /** */
+    private static final Dimension SIZE = new Dimension(200, 200);  
+    
+    /** */
+    private final JFrame myMainFrame = new JFrame("PowerPaint"); 
+    
+
+    
+    /**
+     * 
+     */
+    public void start() {
+        myMainFrame.setVisible(true); 
+        myMainFrame.setLocationRelativeTo(null);
+        myMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myMainFrame.setLayout(new BorderLayout());
+        myMainFrame.setSize(SIZE);
+        myMainFrame.setResizable(true);
+        myMainFrame.setIconImage(null); //replace with W
+        //set Metal theme & minimum size maybe? 
+        
+    }
+}

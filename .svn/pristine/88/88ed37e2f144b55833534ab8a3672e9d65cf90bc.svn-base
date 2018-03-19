@@ -1,0 +1,54 @@
+package tool;
+
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 15, 2017
+ */
+public class LineTool extends AbstractTool {
+    
+    private Line2D myLine;
+    
+    private double myX;
+    private double myY;
+    
+//    @Override
+//    public String getToolName() {
+//        return getClass().getSimpleName().toLowerCase();
+//    }
+//
+//    @Override
+//    public String getToolImage() {
+//        final StringBuilder imageName = new StringBuilder(25); 
+//        final String toolName = getClass().getSimpleName().toLowerCase(); 
+//        imageName.append(toolName); 
+//        imageName.append(".gif"); 
+//        return imageName.toString();
+//    }
+
+    @Override
+    public Shape startingPoint(final double theX, final double theY) {
+        myX = theX;
+        myY = theY;
+        myLine = new Line2D.Double(myX, myY, myX, myY);
+        return (Shape) myLine.clone();
+    }
+
+    @Override
+    public Shape movePoint(final double theX, final double theY) {
+        myLine.setLine(myX, myY, theX, theY);
+        return (Shape) myLine.clone(); 
+    }
+    
+    @Override
+    public Shape endingPoint(final double theX, final  double theY) {
+        myLine.setLine(myX, myY, theX, theY);
+        return (Shape) myLine.clone();
+    }
+
+}
+

@@ -1,0 +1,21 @@
+package view;
+
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 7, 2017
+ */
+public class DrawingPanel extends JPanel {
+    
+    /** */
+    public DrawingPanel() {
+        setBackground(Color.WHITE); 
+        setPreferredSize(new Dimension(200,200)); 
+    }
+
+}

@@ -1,0 +1,36 @@
+package tool;
+
+import java.awt.Shape;
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version 
+ */
+public abstract class AbstractTool implements ToolInterface {
+    
+    /** */ 
+    private final String myToolName = getClass().getSimpleName().toLowerCase(); 
+    
+    @Override
+    public String getToolName() {
+        return myToolName;
+    }
+
+    @Override
+    public String getToolImage() {
+        final StringBuilder imageName = new StringBuilder(25);  
+        imageName.append(myToolName); 
+        imageName.append(".gif"); 
+        return imageName.toString();
+    }
+
+    @Override
+    public abstract Shape startingPoint(double theX, double theY);
+   
+    @Override
+    public abstract Shape movePoint(double theX, double theY);
+
+    @Override
+    public abstract Shape endingPoint(double theX, double theY);
+
+}

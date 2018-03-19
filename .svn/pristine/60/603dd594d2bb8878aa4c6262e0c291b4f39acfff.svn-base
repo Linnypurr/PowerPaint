@@ -1,0 +1,100 @@
+package tool;
+
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.Stroke;
+
+public class ShapeTool {
+    
+    /** The line width. */
+    public static final int LINE_WIDTH = 5;
+    
+    /**Constant of the UW purple color. */ 
+    private static final Color UW_PURPLE = new Color(51, 0, 111); 
+    
+    /**Constant of the UW gold color. */
+    private static final Color UW_GOLD = new Color(232, 211, 162); 
+    
+    
+    private Shape myShape; 
+    
+    private Color mySelectedColor; 
+    
+    private int myStroke;
+    
+    private boolean myFill; 
+    
+    private Color myFillColor; 
+    
+//    public ShapeTool(final Shape theShape) {
+//        myShape = theShape; 
+//        mySelectedColor = UW_PURPLE; 
+//        myFill = false; 
+//    }
+    
+    
+    /**
+     * 
+     * @param theShape
+     * @param theColor
+     * @param theStroke
+     * @param theFill
+     */
+    public ShapeTool(final Shape theShape,final Color theColor, 
+                     final int theStroke, final boolean theFill) {
+        myShape = theShape; 
+        mySelectedColor = theColor; 
+        myStroke = theStroke; 
+        myFill = theFill; 
+    }
+    
+    
+    public void setShape(final Shape theShape) {
+        myShape = theShape; 
+    }
+    
+    public Shape getShape() {
+        return myShape; 
+    }
+    /**
+     * 
+     * @param theFillColor
+     */
+    public void setFillColor(final Color theFillColor) {
+        if (myFill) {
+            myFillColor = theFillColor; 
+        }
+    }
+    
+    public void setShapeColor(final Color theShapeColor) {
+        mySelectedColor = theShapeColor; 
+    }
+    
+    public Color getShapeColor() {
+        return mySelectedColor; 
+    }
+    
+    public Color getFillColor() {
+        return myFillColor; 
+    }
+    
+    
+    public boolean getFilled() {
+        return myFill; 
+    }
+    
+    public void setFilled(final boolean theFill) {
+        myFill = theFill; 
+    }
+    
+    public int getStroke() {
+        return myStroke; 
+    }
+    
+    public void setStroke(final int theStroke) {
+        myStroke = theStroke; 
+    }
+    
+}
+
+

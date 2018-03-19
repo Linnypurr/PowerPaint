@@ -1,0 +1,32 @@
+package tool;
+
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+
+public class RectangleTool extends AbstractTools {
+
+    private Rectangle2D myRectangle; 
+    
+    private double myX; 
+    private double myY; 
+    
+    @Override
+    public Shape startingPoint(double theX, double theY) {
+       myX = theX; 
+       myY = theY; 
+       
+    }
+
+    @Override
+    public Shape movePoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Shape endingPoint(double theX, double theY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+}

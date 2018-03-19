@@ -1,0 +1,79 @@
+package view;
+
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Shape;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+
+import tool.EllipseTool;
+import tool.LineTool;
+import tool.PencilTool;
+import tool.RectangleTool;
+import tool.RoundRectangleTool;
+import tool.ToolInterface;
+
+/**
+ * Class that creates the JToolBar for the 
+ * PowerPaintGUI class to use. 
+ * 
+ * @author Lindsee Purnell
+ * @version November 14, 2017 
+ *
+ */
+public class DrawingToolBar extends JToolBar {
+    
+    /** */
+    private ArrayList<JToggleButton> myToolList = new ArrayList<JToggleButton>();
+    
+    /** */ 
+    public DrawingToolBar(final ArrayList<ToolInterface> theToolList) {
+        super(); 
+        setFloatable(true); 
+        setLayout(new FlowLayout(FlowLayout.LEFT)); 
+        setOrientation(HORIZONTAL); 
+        myToolList = createToolList(theToolList); 
+        for (final JToggleButton button : myToolList) {
+            add(button); 
+//            if (button.getName().equals("LineT")) {
+//                button.setEnabled(true); 
+//            } else {
+//                button.setEnabled(false);
+//            }
+        }
+        
+    }
+    
+    /**
+     * 
+     * @param theToolList arraylist of tools. 
+     * @return an arraylist of toggle buttons. 
+     */
+    private ArrayList<JToggleButton> createToolList(
+                                 final ArrayList<ToolInterface> theToolList) {
+        final ArrayList<JToggleButton> toolButtons = new ArrayList<JToggleButton>();
+        for (ToolInterface tool : theToolList) {
+            final JToggleButton toolButton = createToolButton(tool); 
+            toolButtons.add(toolButton); 
+        }
+        return toolButtons; 
+    }
+    
+    /**
+     * 
+     * @param theTool tool object. 
+     * @return currentButton that was created. 
+     */
+    private JToggleButton createToolButton(final ToolInterface theTool) {
+        final JToggleButton currentButton;
+        final String toolName = theTool.getToolName(); 
+        final String imageName = theTool.getToolImage(); 
+        final ImageIcon icon = new ImageIcon(imageName); 
+        currentButton = new JToggleButton(toolName, icon); 
+        currentButton.setPreferredSize(new Dimension(120, 30)); 
+        return currentButton; 
+    }
+}

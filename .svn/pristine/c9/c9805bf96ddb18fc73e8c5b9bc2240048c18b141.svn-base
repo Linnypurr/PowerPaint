@@ -1,0 +1,37 @@
+package tool;
+
+import java.awt.Shape;
+import java.awt.geom.RoundRectangle2D;
+
+public class RoundRectangleTool extends AbstractTool {
+    
+    private static final double ARC_WIDTH = 22.0;
+    
+    private static final double ARC_HEIGHT = 18.0;
+    
+    private RoundRectangle2D myRoundRect; 
+    
+    private double myX; 
+    private double myY; 
+
+    @Override
+    public Shape startingPoint(final double theX, final double theY) {
+        myX = theX; 
+        myY = theY; 
+        myRoundRect = new RoundRectangle2D.Double(myX, myY, myX, myY, ARC_WIDTH, ARC_HEIGHT);
+        return (Shape) myRoundRect.clone();
+    }
+
+    @Override
+    public Shape movePoint(final double theX, final double theY) {
+        myRoundRect.setRoundRect(myX, myY, theX, theY, ARC_WIDTH, ARC_HEIGHT);
+        return (Shape) myRoundRect.clone(); 
+    }
+
+    @Override
+    public Shape endingPoint(final double theX, final double theY) {
+        myRoundRect.setRoundRect(myX, myY, theX, theY, ARC_WIDTH, ARC_HEIGHT);
+        return (Shape) myRoundRect.clone();
+    }
+
+}

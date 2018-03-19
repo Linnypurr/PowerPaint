@@ -1,0 +1,289 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
+import tool.EllipseTool;
+import tool.LineTool;
+import tool.PencilTool;
+import tool.RectangleTool;
+import tool.RoundRectangleTool;
+import tool.ToolInterface;
+
+/**
+ * 
+ * @author Lindsee Purnell
+ * @version November 7, 2017
+ */
+public class PowerPaintGUI {
+    
+    /** Avoiding magic number. */
+    private static final int FIVE = 5; 
+    
+    /** */
+    private static final Dimension SIZE = new Dimension(600, 600);  
+    
+    /**Constant of the UW purple color. */ 
+    private static final Color UW_PURPLE = new Color(51, 0, 111); 
+    
+    /**Constant of the UW gold color. */
+    private static final Color UW_GOLD = new Color(232, 211, 162); 
+    
+    /** Initial Color for all shapes drawn. */
+    private static Color myStrokeColor = UW_PURPLE;
+    
+    /** Initial fill color for fillable shapes. */
+    private static Color myFillColor = UW_GOLD; 
+    
+    /** */
+    private static ToolInterface myTool; 
+    
+    /** */
+    private static ArrayList<ToolAction> myToolButtons = new ArrayList<ToolAction>();
+    
+    /** */
+    private final JFrame myMainFrame = new JFrame("PowerPaint"); 
+    
+    /** */
+    private final static JSlider mySlider = new JSlider(SwingConstants.HORIZONTAL,
+                                                 0, 25, 1);  
+    /**
+     * 
+     */
+    public void start() {
+        myMainFrame.setVisible(true); 
+        myMainFrame.setLocationRelativeTo(null);
+        myMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myMainFrame.setLayout(new BorderLayout());
+        myMainFrame.setSize(SIZE);
+        myMainFrame.setMinimumSize(SIZE);
+        myMainFrame.setResizable(true);
+        myMainFrame.add(new DrawingPanel(), BorderLayout.CENTER); 
+        final ImageIcon icon = new ImageIcon("./resources/w.gif"); 
+        myMainFrame.setIconImage(icon.getImage());
+        
+        myToolButtons.add(new ToolAction(new LineTool())); 
+        myToolButtons.add(new ToolAction(new RectangleTool())); 
+        myToolButtons.add(new ToolAction(new RoundRectangleTool())); 
+        myToolButtons.add(new ToolAction(new EllipseTool()));
+        myToolButtons.add(new ToolAction(new PencilTool()));
+      
+        final JMenuBar menuBar = new JMenuBar(); 
+        menuBar.add(optionsMenu()); 
+        menuBar.add(toolsMenu()); 
+        menuBar.add(helpMenu()); 
+        myMainFrame.add(menuBar, BorderLayout.NORTH);
+        myMainFrame.add(createToolBar(), BorderLayout.SOUTH); 
+        myMainFrame.pack();
+        
+    }
+    
+    /**
+     * Helper method to create the Options menu,
+     * includes JSlider and JColorChooser creations. 
+     * 
+     * @return the completed optionsMenu. 
+     */
+    private JMenu optionsMenu() {
+        final JMenu optionsMenu = new JMenu("Options"); 
+        final JMenu thickness = new JMenu("Thickness");
+        mySlider.setMajorTickSpacing(FIVE);
+        mySlider.setMinorTickSpacing(1);
+        mySlider.setPaintTicks(true);
+        mySlider.setPaintLabels(true);
+        mySlider.setValue(FIVE);
+        thickness.add(mySlider); 
+        optionsMenu.add(thickness); 
+        optionsMenu.addSeparator();
+        //Color
+        final JColorChooser pickColor = new JColorChooser(); 
+        final JMenuItem drawColor = new JMenuItem("Draw Color..."); 
+        drawColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                final Color pickedColor = JColorChooser.showDialog(pickColor,
+                                      "Choose a color", UW_PURPLE); 
+                myStrokeColor = pickedColor; 
+            }
+        });
+        optionsMenu.add(drawColor); 
+        // Fill Color
+        final JColorChooser pickFillColor = new JColorChooser(); 
+        final JMenuItem fillColor = new JMenuItem("Fill Color...");
+        fillColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                final Color pickedFillColor = JColorChooser.showDialog(pickFillColor,
+                                   "Choose a fill color", UW_GOLD); 
+                myFillColor = pickedFillColor; 
+            }
+        });
+        optionsMenu.addSeparator();
+        optionsMenu.add(fillColor);
+        optionsMenu.addSeparator();
+        final JCheckBoxMenuItem fillCheckBox = new JCheckBoxMenuItem("Fill"); 
+        optionsMenu.add(fillCheckBox); 
+        final JMenu clear = new JMenu("Clear");
+        optionsMenu.addSeparator();
+        clear.setEnabled(false);
+        optionsMenu.add(clear); 
+        return optionsMenu; 
+        
+    }
+    /**
+     * Helper method to create the tool menu, 
+     * which is just radio buttons that correspond to a tool. 
+     * 
+     * @return toolMenu called Tools. 
+     */
+    private JMenu toolsMenu() {
+        final JMenu toolMenu = new JMenu("Tools"); 
+        final ButtonGroup btngrp = new ButtonGroup();
+        
+        for (final ToolAction tool : myToolButtons) {
+            final JRadioButtonMenuItem btn = new JRadioButtonMenuItem(tool);
+            btngrp.add(btn);
+            toolMenu.add(btn);
+        }
+        return toolMenu;
+    }
+    
+    /** */ 
+    private JMenu helpMenu() {
+        final ImageIcon icon = new ImageIcon("./resources/w.gif"); 
+        final JMenu help = new JMenu("Help");
+        final JMenu about = new JMenu("About...");
+        about.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                JOptionPane.showMessageDialog(null, "TCSS 305 PowerPaint"
+                                + "\n Autumn 2017 \n Lindsee Purnell",
+                                "About", JOptionPane.INFORMATION_MESSAGE, icon);
+            }
+        
+        });
+        help.add(about); 
+        return help; 
+    }
+    
+    /** */
+    public JToolBar createToolBar() {
+        final JToolBar toolBar = new JToolBar(); 
+        toolBar.setFloatable(true);
+        toolBar.addSeparator();
+        
+        final ButtonGroup btngrp = new ButtonGroup();
+        for (final ToolAction tool : myToolButtons) {
+            final JToggleButton tb = new JToggleButton(tool); 
+            //tb.setIcon(tool.getIcon());
+            btngrp.add(tb);
+            toolBar.add(tb);
+        }
+        
+        return toolBar; 
+    }
+    
+    /**
+     * 
+     * @param theTool
+     */
+    public static void setTool(final ToolInterface theTool) {
+        myTool = theTool;
+    }
+    
+    public static ToolInterface getTool() {
+        return myTool;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public static int getStroke() {
+       return mySlider.getValue();
+    }
+    
+    public static Color getStrokeColor() {
+        return myStrokeColor; 
+    }
+    
+    public static boolean isFillable() {
+        boolean fillable = true; 
+        for (ToolAction tool : myToolButtons) {
+            if (tool.myTool.getToolName().equals("Line") 
+                            || tool.myTool.getToolName().equals("Pencil")) {
+                fillable = false; 
+            }
+        }
+        return fillable; 
+    }
+    
+    //Inner class
+    /**
+     * Private inner class to give action to the tool buttons. 
+     *  
+     * @author Lindsee Purnell
+     * @version Pow1
+     */
+    private class ToolAction extends AbstractAction {
+        
+        /**
+         * Default serial ID. 
+         */
+        private static final long serialVersionUID = 1L;
+        
+        /**
+         * Tool variable to be assigned to a button. 
+         */
+        private final ToolInterface myTool; 
+        
+        /**
+         * Tool action constructor.
+         * 
+         * @param theTool takes in a tool argument. 
+         */
+        ToolAction(final ToolInterface theTool) {
+            super(theTool.getToolName()); 
+            myTool = theTool; 
+        }
+        
+        @Override
+        public void actionPerformed(final ActionEvent theEvent) {
+            PowerPaintGUI.setTool(myTool); 
+        }
+        
+        //Fix
+        public ImageIcon getIcon() {
+            final ImageIcon icon;
+            final String imageName = myTool.getToolImage().toLowerCase();
+            icon = new ImageIcon(imageName); 
+            final Image img = icon.getImage(); 
+            final Image newImg = img.getScaledInstance(10, 10, 0);
+            final ImageIcon reIcon = new ImageIcon(newImg); 
+            return reIcon;
+        }
+        
+    }
+}

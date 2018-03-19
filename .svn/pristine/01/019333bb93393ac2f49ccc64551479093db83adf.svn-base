@@ -1,0 +1,61 @@
+package tool;
+
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+
+public class RectangleTool extends AbstractTool {
+
+    private Rectangle2D myRectangle; 
+    
+    private double myX; 
+    private double myY; 
+    
+    @Override
+    public Shape startingPoint(final double theX, final double theY) {
+        myX = theX; 
+        myY = theY; 
+        myRectangle = new Rectangle2D.Double(myX, myY, 0, 0);
+        return (Shape) myRectangle.clone(); 
+    }
+
+    @Override
+    public Shape movePoint(final double theX, final double theY) {
+        final double width; 
+        final double height; 
+        width = Math.abs(theX - myX); 
+        height = Math.abs(theY - myY); 
+        myRectangle.setRect(myX, myY, width, height);
+        System.out.println(width);
+        System.out.println(height);
+        return (Shape) myRectangle.clone();
+    }
+
+    @Override
+    public Shape endingPoint(final double theX, final double theY) {
+        final double width; 
+        final double height; 
+        width = Math.abs(theX - myX); 
+        height = Math.abs(theY - myY); 
+        myRectangle.setRect(myX, myY, width, height);
+        System.out.println(width);
+        System.out.println(height);
+        return (Shape) myRectangle.clone();
+    }
+    
+//    public double getX() {
+//        return myX; 
+//    }
+//    
+//    public double getY() {
+//        return myY; 
+//    }
+//    
+//    public void setX(final double theX) {
+//        myX = theX; 
+//    }
+//    
+//    public void setY(final double theY) {
+//        myY = theY; 
+//    }
+
+}
