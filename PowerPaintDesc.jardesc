@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="lindsp14-powerpaint/PowerPaint.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/lindsp14-powerpaint/PowerPaintDesc.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=lindsp14-powerpaint/src&lt;view{PowerPaintMain.java[PowerPaintMain" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/lindsp14-powerpaint/.classpath"/>
+        <file path="/lindsp14-powerpaint/.checkstyle"/>
+        <file path="/lindsp14-powerpaint/.fbprefs"/>
+        <file path="/lindsp14-powerpaint/.project"/>
+        <folder path="/lindsp14-powerpaint/support_files"/>
+        <file path="/lindsp14-powerpaint/.pmd"/>
+        <javaElement handleIdentifier="=lindsp14-powerpaint/src"/>
+        <folder path="/lindsp14-powerpaint/resources"/>
+    </selectedElements>
+</jardesc>

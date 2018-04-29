@@ -59,8 +59,7 @@ public class PowerPaintGUI {
     /** JSlider for thickness. */
     private static  JSlider mySlider = new JSlider(SwingConstants.HORIZONTAL,
                                                  0, TWENTY_FIVE, 1);  
-    
-    /** Initial Color for all shapes drawn. */
+     /** Initial Color for all shapes drawn. */
     private static Color myStrokeColor = UW_PURPLE;
     
     /** Initial fill color for fillable shapes. */
@@ -74,6 +73,12 @@ public class PowerPaintGUI {
     
     /** Boolean to determine if they want to fill Shape. */
     private static boolean isFilled; 
+    
+    /** clear boolean. **/
+    private static boolean isClearable; 
+    
+    /** Instance of drawing Panel. */ 
+    private DrawingPanel myDrawingPanel = new DrawingPanel(); 
     
     /** PowerPaint GUI frame. */
     private final JFrame myMainFrame = new JFrame("PowerPaint"); 
@@ -89,7 +94,7 @@ public class PowerPaintGUI {
         myMainFrame.setSize(SIZE);
         myMainFrame.setMinimumSize(SIZE);
         myMainFrame.setResizable(true);
-        myMainFrame.add(new DrawingPanel(), BorderLayout.CENTER); 
+        myMainFrame.add(myDrawingPanel, BorderLayout.CENTER); 
         final ImageIcon icon = new ImageIcon(W_GIF); 
         myMainFrame.setIconImage(icon.getImage());
         
@@ -106,6 +111,7 @@ public class PowerPaintGUI {
         myMainFrame.add(menuBar, BorderLayout.NORTH);
         myMainFrame.add(createToolBar(), BorderLayout.SOUTH); 
         myMainFrame.pack();
+        isClearable = true; 
         
     }
     
@@ -160,11 +166,11 @@ public class PowerPaintGUI {
             }
         });
         optionsMenu.add(fillCheckBox); 
-        final JMenu clear = new JMenu("Clear");
+        final JMenuItem clear = new JMenuItem("Clear");
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
-               myMainFrame.add(new DrawingPanel());  
+                myDrawingPanel.clearShapes();
             }
         });
         optionsMenu.addSeparator();
@@ -226,12 +232,34 @@ public class PowerPaintGUI {
         final ButtonGroup btngrp = new ButtonGroup();
         for (final ToolAction tool : myToolButtons) {
             final JToggleButton tb = new JToggleButton(tool); 
-            //tb.setIcon(tool.getIcon());
             btngrp.add(tb);
             toolBar.add(tb);
         }
         
         return toolBar; 
+    }
+    
+    /** Toggle. */ 
+    public static void changeClear() {
+        isClearable = !isClearable; 
+    }
+    
+    /** 
+     * set isClearable.
+     * 
+     * @param theClear boolean 
+     **/
+    public static void setClear(final boolean theClear) {
+        isClearable = theClear; 
+    }
+    
+    /** 
+     * get getClearable. 
+     *
+     * @return isClearable
+     **/ 
+    public static boolean getClear() {
+        return isClearable; 
     }
     
     /**
@@ -322,21 +350,6 @@ public class PowerPaintGUI {
             PowerPaintGUI.setTool(myTool); 
         }
         
-//        //Fix
-//        /**
-//         * Little helper method to help set an icon. 
-//         * 
-//         * @return ImageIcon of tool image. 
-//         */
-//        public ImageIcon getIcon() {
-//            final ImageIcon icon;
-//            final String imageName = myTool.getToolImage().toLowerCase();
-//            icon = new ImageIcon(imageName); 
-//            final Image img = icon.getImage(); 
-//            final Image newImg = img.getScaledInstance(10, 10, 0);
-//            final ImageIcon reIcon = new ImageIcon(newImg); 
-//            return reIcon;
-//        }
         
     }
 }

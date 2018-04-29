@@ -92,6 +92,15 @@ public class DrawingPanel extends JPanel {
                 g2d.draw(shape.getShape()); 
             }  
         }
+       
+    }
+    
+    /**
+     * For clearing the drawing panel. 
+     */
+    public void clearShapes() {
+        myShapesDrawn.clear();
+        repaint(); 
     }
     
     /**
